@@ -55,7 +55,7 @@ spec:
               value: {{default "me@gmail.com" .Values.email.username}}
             - name: TAIGA_EMAIL_PASS
               value: {{default "super-secure-pass phrase thing!" .Values.email.password}}
-            {{- if .Values.postgresql.enabled -}}
+            {{- if .Values.postgresql.enabled }}
             - name: TAIGA_DB_NAME
               valueFrom:
                 configMapKeyRef:
@@ -76,7 +76,7 @@ spec:
                 configMapKeyRef:
                   name: {{ include "taiga.fullname" . }}-secret
                   key: taiga-db-password
-            {{- else -}}
+            {{- else }}
             - name: TAIGA_DB_NAME
               value: {{default "postgres" .Values.database.name}}
             - name: TAIGA_DB_HOST
@@ -106,9 +106,9 @@ spec:
     {{- end }}
       volumes:
       - name: data
-      {{- if .Values.persistence.enabled -}}
+      {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim | default (include "taiga.fullname" .) }}
-      {{- else -}}
+      {{- else }}
         emptyDir: {}
       {{- end }}
