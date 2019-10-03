@@ -1,20 +1,18 @@
 dependencies:
 - name: taiga
-  version: 0.1.0
   repository: file://./requirements/taiga
-- name: taiga-events
   version: 0.1.0
+- name: taiga-events
   repository: file://./requirements/taiga-events
-  condition: taiga-events.enabled
+  version: 0.1.0
 - name: redis-ha
+  repository: https://kubernetes-charts.storage.googleapis.com
   version: 3.5.0
-  repository: https://kubernetes-charts.storage.googleapis.com
-  condition: redis-ha.enabled
 - name: rabbitmq-ha
+  repository: https://kubernetes-charts.storage.googleapis.com
   version: 1.27.2
-  repository: https://kubernetes-charts.storage.googleapis.com
-  condition: rabbitmq-ha.enabled
 - name: postgresql
-  version: 5.3.8
   repository: https://kubernetes-charts.storage.googleapis.com
-  condition: postgresql.enabled
+  version: 5.3.8
+digest: sha256:0d54608382707eb7d56a20c77308e32bc5db4185543797cd39cc520c2b6a3848
+generated: "2019-10-03T18:59:28.827053428+05:30"
