@@ -55,6 +55,28 @@ spec:
               value: {{default "me@gmail.com" .Values.email.username}}
             - name: TAIGA_EMAIL_PASS
               value: {{default "super-secure-pass phrase thing!" .Values.email.password}}
+            {{- if .Values.postgresql.enabled -}}
+            - name: TAIGA_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "taiga.fullname" . }}-secret
+                  key: taiga-db-database
+            - name: TAIGA_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "taiga.fullname" . }}-secret
+                  key: taiga-db-hostname
+            - name: TAIGA_DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "taiga.fullname" . }}-secret
+                  key: taiga-db-username
+            - name: taiga-db-user
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "taiga.fullname" . }}-secret
+                  key: taiga-db-password
+            {{- else -}}
             - name: TAIGA_DB_NAME
               value: {{default "postgres" .Values.database.name}}
             - name: TAIGA_DB_HOST
@@ -63,6 +85,7 @@ spec:
               value: {{default "postgres" .Values.database.username}}
             - name: TAIGA_DB_PASSWORD
               value: {{default "postgres" .Values.database.password}}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -83,9 +106,9 @@ spec:
     {{- end }}
       volumes:
       - name: data
-      {{- if .Values.persistence.enabled }}
+      {{- if .Values.persistence.enabled -}}
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.existingClaim | default (include "taiga.fullname" .) }}
-      {{- else }}
+      {{- else -}}
         emptyDir: {}
-      {{- end -}}
+      {{- end }}
