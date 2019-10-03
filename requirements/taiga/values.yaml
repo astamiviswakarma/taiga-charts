@@ -26,13 +26,13 @@ database:
   password: secret
 
 ssl:
-  enabled: false
-  reverseProxy: true
+  enabled: "False"
+  reverseProxy: "True"
 
 email:
-  enabled: false
+  enabled: "False"
   from: admin@mycompany.net
-  useTls: false
+  useTls: "False"
   host: localhost
   port: 25
   username:

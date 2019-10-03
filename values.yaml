@@ -14,15 +14,24 @@ taiga:
     password: secret
 
   ssl:
-    enabled: false
-    reverseProxy: false
+    enabled: "False"
+    reverseProxy: "True"
 
   email:
-    enabled: false
+    enabled: "False"
     from: admin@mycompany.net
     useTls: false
     host: localhost
     port: 25
     username:
     password:
+
+redis-ha:
+  enabled: false
+
+rabbitmq-ha: 
+  enabled: false
+
+taiga-events: 
+  enabled: false
 
