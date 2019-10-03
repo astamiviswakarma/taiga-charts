@@ -5,13 +5,32 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: benhutchins/taiga
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+database:
+  name: taiga
+  host: localhost
+  username: taiga
+  password: secret
+
+ssl:
+  enabled: false
+  reverseProxy: true
+
+email:
+  enabled: false
+  from: admin@mycompany.net
+  useTls: false
+  host: localhost
+  port: 25
+  username:
+  password:
 
 service:
   type: ClusterIP
@@ -48,3 +67,37 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+
+## Enable persistence using Persistent Volume Claims
+## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  enabled: true
+
+  ## A manually managed Persistent Volume and Claim
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  # existingClaim:
+
+  ## The path the volume will be mounted at, useful when using different
+  ## Taiga images.
+  ##
+  mountPath: /usr/src/taiga-back/media
+
+  ## The subdirectory of the volume to mount to, useful in dev environments
+  ## and one PV for multiple services.
+  ##
+  subPath: ""
+
+  ## rabbitmq data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  # storageClass: "-"
+  accessMode: ReadWriteOnce
+  size: 1Gi

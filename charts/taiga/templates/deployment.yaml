@@ -36,8 +36,39 @@ spec:
             httpGet:
               path: /
               port: http
+          env:
+            - name: TAIGA_SSL
+              value: {{default "False" .Values.ssl.enabled}}
+            - name: TAIGA_SSL_BY_REVERSE_PROXY
+              value: {{default "True" .Values.ssl.reverseProxy}}
+            - name: TAIGA_ENABLE_EMAIL
+              value: {{default "True" .Values.email.enabled}}
+            - name: TAIGA_EMAIL_FROM
+              value: {{default "no-reply@taiga.mycompany.net" .Values.email.from}}
+            - name: TAIGA_EMAIL_USE_TLS
+              value: {{default "True" .Values.email.useTls}}
+            - name: TAIGA_EMAIL_HOST
+              value: {{default "smtp.mycompany.net" .Values.email.host}}
+            - name: TAIGA_EMAIL_PORT
+              value: {{default "587" .Values.email.port}}
+            - name: TAIGA_EMAIL_USER
+              value: {{default "me@gmail.com" .Values.email.username}}
+            - name: TAIGA_EMAIL_PASS
+              value: {{default "super-secure-pass phrase thing!" .Values.email.password}}
+            - name: TAIGA_DB_NAME
+              value: {{default "postgres" .Values.database.name}}
+            - name: TAIGA_DB_HOST
+              value: {{default "postgres" .Values.database.host}}
+            - name: TAIGA_DB_USER
+              value: {{default "postgres" .Values.database.username}}
+            - name: TAIGA_DB_PASSWORD
+              value: {{default "postgres" .Values.database.password}}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{default "/usr/src/taiga-back/media" .Values.persistence.mountPath}}
+              subPath: {{default "" .Values.persistence.subPath}}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -50,3 +81,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+      volumes:
+      - name: data
+      {{- if .Values.persistence.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim | default (include "taiga.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
