@@ -2,7 +2,6 @@ dependencies:
 - name: taiga
   version: 0.1.0
   repository: file://./charts/taiga
-  condition: taiga.enabled
 - name: taiga-events
   version: 0.1.0
   repository: file://./charts/taiga-events
