@@ -1,0 +1,21 @@
+dependencies:
+- name: taiga
+  version: 0.1.0
+  repository: file://./charts/taiga
+  condition: taiga.enabled
+- name: taiga-events
+  version: 0.1.0
+  repository: file://./charts/taiga-events
+  condition: taiga-events.enabled
+- name: redis-ha
+  version: 3.5.0
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: redis-ha.enabled
+- name: rabbitmq-ha
+  version: 1.27.2
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: rabbitmq-ha.enabled
+- name: postgresql
+  version: 5.3.8
+  repository: https://kubernetes-charts.storage.googleapis.com
+  condition: postgresql.enabled
