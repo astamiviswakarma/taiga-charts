@@ -1,4 +1,4 @@
-Taiga helm chart
+# Taiga helm chart
 
 @TODO:
   - add taiga events
