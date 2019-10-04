@@ -37,6 +37,8 @@ spec:
               path: /
               port: http
           env:
+            - name: TAIGA_HOSTNAME
+              value: {{default "localhost" .Values.hostname | quote}}
             - name: TAIGA_SSL
               value: {{default "False" .Values.ssl.enabled | quote}}
             - name: TAIGA_SSL_BY_REVERSE_PROXY
