@@ -28,12 +28,10 @@ taiga:
     username:
     password:
 
-taiga-events: 
+taiga-events:
   enabled: false
-  redis-ha:
-    enabled: true
+#   redis-ha:
+#     enabled: true
 
-  rabbitmq-ha: 
-    enabled: true
-
-
+#   rabbitmq-ha:
+#     enabled: true
