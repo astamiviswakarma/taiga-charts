@@ -1,12 +1,14 @@
 # Default values for taiga-chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-postgresql:
-  enabled: true
-  postgresqlDatabase: taiga
-  postgresqlPassword: changeme
 
 taiga:
+  hostname: localhost
+  postgresql:
+    enabled: true
+    postgresqlDatabase: taiga
+    postgresqlPassword: changeme
+
   database:
     name: taiga
     host: localhost
@@ -15,7 +17,7 @@ taiga:
 
   ssl:
     enabled: "False"
-    reverseProxy: "True"
+    reverseProxy: "False"
 
   email:
     enabled: "False"
@@ -26,12 +28,12 @@ taiga:
     username:
     password:
 
-redis-ha:
-  enabled: false
-
-rabbitmq-ha: 
-  enabled: false
-
 taiga-events: 
   enabled: false
+  redis-ha:
+    enabled: true
+
+  rabbitmq-ha: 
+    enabled: true
+
 
